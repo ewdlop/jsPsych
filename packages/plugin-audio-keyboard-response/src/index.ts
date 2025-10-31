@@ -1,4 +1,3 @@
-import autoBind from "auto-bind";
 import { JsPsych, JsPsychPlugin, ParameterType, TrialType } from "jspsych";
 
 import { AudioPlayerInterface } from "../../jspsych/src/modules/plugin-api/AudioPlayer";
@@ -114,9 +113,7 @@ class AudioKeyboardResponsePlugin implements JsPsychPlugin<Info> {
   private startTime: number;
   private finish: ({}: { rt: number; response: string; stimulus: string }) => void;
 
-  constructor(private jsPsych: JsPsych) {
-    autoBind(this);
-  }
+  constructor(private jsPsych: JsPsych) {}
 
   trial(display_element: HTMLElement, trial: TrialType<Info>, on_load: () => void) {
     return new Promise(async (resolve) => {
@@ -162,7 +159,7 @@ class AudioKeyboardResponsePlugin implements JsPsychPlugin<Info> {
     });
   }
 
-  private end_trial() {
+  private end_trial = () => {
     // kill any remaining setTimeout handlers
     this.jsPsych.pluginAPI.clearAllTimeouts();
 
@@ -188,16 +185,16 @@ class AudioKeyboardResponsePlugin implements JsPsychPlugin<Info> {
 
     // move on to the next trial
     this.finish(trial_data);
-  }
+  };
 
-  private after_response(info: { key: string; rt: number }) {
+  private after_response = (info: { key: string; rt: number }) => {
     this.response = info;
     if (this.params.response_ends_trial) {
       this.end_trial();
     }
-  }
+  };
 
-  private setup_keyboard_listener() {
+  private setup_keyboard_listener = () => {
     // start the response listener
     if (this.jsPsych.pluginAPI.useWebaudio) {
       this.jsPsych.pluginAPI.getKeyboardResponse({
@@ -218,7 +215,7 @@ class AudioKeyboardResponsePlugin implements JsPsychPlugin<Info> {
         allow_held_key: false,
       });
     }
-  }
+  };
 
   async simulate(
     trial: TrialType<Info>,

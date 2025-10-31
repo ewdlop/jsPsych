@@ -1,4 +1,3 @@
-import autoBind from "auto-bind";
 import { JsPsych, JsPsychPlugin, ParameterType, TrialType } from "jspsych";
 
 import { AudioPlayerInterface } from "../../jspsych/src/modules/plugin-api/AudioPlayer";
@@ -148,9 +147,7 @@ class AudioButtonResponsePlugin implements JsPsychPlugin<Info> {
   private startTime: number;
   private trial_complete: (trial_data: { rt: number; stimulus: string; response: number }) => void;
 
-  constructor(private jsPsych: JsPsych) {
-    autoBind(this);
-  }
+  constructor(private jsPsych: JsPsych) {}
 
   async trial(display_element: HTMLElement, trial: TrialType<Info>, on_load: () => void) {
     this.params = trial;
@@ -261,13 +258,13 @@ class AudioButtonResponsePlugin implements JsPsychPlugin<Info> {
     this.jsPsych.pluginAPI.setTimeout(this.enable_buttons_without_delay, delay);
   };
 
-  private enable_buttons() {
+  private enable_buttons = () => {
     if (this.params.enable_button_after > 0) {
       this.enable_buttons_with_delay(this.params.enable_button_after);
     } else {
       this.enable_buttons_without_delay();
     }
-  }
+  };
 
   // function to handle responses by the subject
   private after_response = (choice) => {

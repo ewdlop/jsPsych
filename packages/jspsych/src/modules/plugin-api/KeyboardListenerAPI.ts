@@ -1,5 +1,3 @@
-import autoBind from "auto-bind";
-
 export type KeyboardListener = (e: KeyboardEvent) => void;
 
 export type ValidResponses = string[] | "ALL_KEYS" | "NO_KEYS";
@@ -21,7 +19,6 @@ export class KeyboardListenerAPI {
     private areResponsesCaseSensitive: boolean = false,
     private minimumValidRt = 0
   ) {
-    autoBind(this);
     this.registerRootListeners();
   }
 
@@ -45,22 +42,22 @@ export class KeyboardListenerAPI {
     }
   }
 
-  private rootKeydownListener(e: KeyboardEvent) {
+  private rootKeydownListener = (e: KeyboardEvent) => {
     // Iterate over a static copy of the listeners set because listeners might add other listeners
     // that we do not want to be included in the loop
     for (const listener of [...this.listeners]) {
       listener(e);
     }
     this.heldKeys.add(this.toLowerCaseIfInsensitive(e.key));
-  }
+  };
 
   private toLowerCaseIfInsensitive(string: string) {
     return this.areResponsesCaseSensitive ? string : string.toLowerCase();
   }
 
-  private rootKeyupListener(e: KeyboardEvent) {
+  private rootKeyupListener = (e: KeyboardEvent) => {
     this.heldKeys.delete(this.toLowerCaseIfInsensitive(e.key));
-  }
+  };
 
   private isResponseValid(validResponses: ValidResponses, allowHeldKey: boolean, key: string) {
     // check if key was already held down

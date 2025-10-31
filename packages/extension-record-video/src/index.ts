@@ -1,4 +1,3 @@
-import autoBind from "auto-bind";
 import { JsPsych, JsPsychExtension, JsPsychExtensionInfo, ParameterType } from "jspsych";
 
 import { version } from "../package.json";
@@ -20,9 +19,7 @@ class RecordVideoExtension implements JsPsychExtension {
     citations: '__CITATIONS__',
   };
 
-  constructor(private jsPsych: JsPsych) {
-    autoBind(this);
-  }
+  constructor(private jsPsych: JsPsych) {}
 
   private recordedChunks = [];
   private recorder: MediaRecorder = null;
@@ -68,7 +65,7 @@ class RecordVideoExtension implements JsPsychExtension {
     });
   };
 
-  private handleOnDataAvailable(event) {
+  private handleOnDataAvailable = (event) => {
     if (event.data.size > 0) {
       console.log("chunks added");
       this.recordedChunks.push(event.data);
@@ -76,7 +73,7 @@ class RecordVideoExtension implements JsPsychExtension {
         this.updateData();
       }
     }
-  }
+  };
 
   private updateData() {
     const data = new Blob(this.recordedChunks, {
