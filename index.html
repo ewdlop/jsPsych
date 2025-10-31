@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+  ========================================
+  jsPsych 使用說明 (Usage Instructions)
+  ========================================
+  
+  這是一個簡單的 jsPsych 實驗示例，使用「相同-不同判斷」插件 (Same-Different HTML Plugin)。
+  
+  如何運行此專案 (How to Run):
+  1. 確保您已經安裝了所有必要的依賴項：
+     npm install
+     
+  2. 構建專案（如果需要）：
+     npm run build
+     
+  3. 在瀏覽器中打開此 HTML 文件：
+     - 直接雙擊 index.html，或
+     - 使用本地伺服器（推薦）：
+       - 使用 Python: python -m http.server 8000
+       - 使用 Node.js: npx http-server
+       然後在瀏覽器中訪問 http://localhost:8000
+  
+  實驗說明 (Experiment Description):
+  - 此實驗展示兩個單詞，參與者需要判斷它們的意思是否相同
+  - 按 's' 鍵表示相同 (same)
+  - 按 'd' 鍵表示不同 (different)
+  - 實驗結束後會顯示收集到的數據
+  
+  自定義實驗 (Customization):
+  - 修改 stimuli 陣列來更改顯示的單詞
+  - 修改 prompt 來更改指示文字
+  - 修改 same_key 和 different_key 來更改按鍵映射
+  - 修改 answer 來設定正確答案
+  
+  更多資訊 (More Information):
+  - 官方文檔: https://www.jspsych.org
+  - 插件列表: https://www.jspsych.org/latest/plugins/list-of-plugins/
+  - 示例: 查看 /examples 資料夾中的更多示例
+  ========================================
+-->
+<html>
+  <head>
+    <!-- 載入 jsPsych 核心程式庫 -->
+    <script src="./packages/jspsych/dist/index.browser.js"></script>
+    <!-- 載入相同-不同判斷插件 -->
+    <script src="./packages/plugin-same-different-html/dist/index.browser.js"></script>
+    <!-- 載入 jsPsych 樣式表 -->
+    <link rel="stylesheet" href="./packages/jspsych/css/jspsych.css" />
+  </head>
+  <body></body>
+  <script>
+
+    // 初始化 jsPsych
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        // 實驗結束後顯示收集到的數據
+        jsPsych.data.displayData();
+      }
+    });
+
+    // 定義一個試驗 (trial)
+    var trial = {
+      type: jsPsychSameDifferentHtml, // 使用相同-不同判斷插件
+      stimuli: ['<p>Talkative</p>', '<p>Loquacious</p>'], // 要比較的刺激
+      prompt: "<p>Press 's' if the words mean the same thing. Press 'd' if they mean different things.</p>", // 指示文字
+      same_key: 's', // "相同"的按鍵
+      different_key: 'd', // "不同"的按鍵
+      answer: 'same' // 正確答案
+    };
+
+    // 運行實驗
+    jsPsych.run([trial]);
+
+  </script>
+</html>
