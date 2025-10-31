@@ -32,6 +32,45 @@ There are also a number of [community tutorials](https://www.jspsych.org/latest/
 Several example experiments and plugin demonstrations are available in the `/examples` folder. 
 After you've downloaded the [latest release](https://github.com/jspsych/jsPsych/releases), double-click on an example HTML file to run it in your web browser, and open it with a programming-friendly text editor to see how it works.
 
+## GitHub Pages Deployment
+
+This repository is configured for easy deployment to GitHub Pages. You can deploy your jsPsych experiments and examples to GitHub Pages using the following commands:
+
+### Building for GitHub Pages
+
+```bash
+# Build the site (builds packages and copies files to site/ directory)
+npm run build:site
+
+# Build packages only
+npm run build
+```
+
+### Deploying to GitHub Pages
+
+```bash
+# Deploy to GitHub Pages (builds and deploys in one command)
+npm run deploy
+```
+
+This will:
+1. Build all jsPsych packages
+2. Copy the main `index.html` and `examples/` folder to the `site/` directory
+3. Create a `gh-pages` branch with the static site files
+4. Push the branch to GitHub
+
+Your site will be available at: `https://[username].github.io/jsPsych/`
+
+### Manual Deployment
+
+If you prefer to use the original gh-pages package:
+
+```bash
+npm run deploy:gh-pages
+```
+
+**Note:** Make sure to enable GitHub Pages in your repository settings and select the `gh-pages` branch as the source.
+
 ## Documentation
 
 Documentation is available at [https://www.jspsych.org](https://www.jspsych.org/).
