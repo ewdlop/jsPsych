@@ -1,4 +1,3 @@
-import autoBind from "auto-bind";
 // To work with citations
 import { Class } from "type-fest";
 
@@ -89,8 +88,6 @@ export class JsPsych {
       ...options,
     };
     this.options = options;
-
-    autoBind(this); // so we can pass JsPsych methods as callbacks and `this` remains the JsPsych instance
 
     // detect whether page is running in browser as a local file, and if so, disable web audio and
     // video preloading to prevent CORS issues

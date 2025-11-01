@@ -1,4 +1,3 @@
-import autoBind from "auto-bind";
 import { JsPsych, JsPsychPlugin, ParameterType, TrialType } from "jspsych";
 
 import { AudioPlayerInterface } from "../../jspsych/src/modules/plugin-api/AudioPlayer";
@@ -153,9 +152,7 @@ class AudioSliderResponsePlugin implements JsPsychPlugin<Info> {
     response: number;
   }) => void;
 
-  constructor(private jsPsych: JsPsych) {
-    autoBind(this);
-  }
+  constructor(private jsPsych: JsPsych) {}
 
   async trial(display_element: HTMLElement, trial: TrialType<Info>, on_load: () => void) {
     this.params = trial;
@@ -183,14 +180,14 @@ class AudioSliderResponsePlugin implements JsPsychPlugin<Info> {
   }
 
   // to enable slider after audio ends
-  private enable_slider() {
+  private enable_slider = () => {
     document.querySelector<HTMLInputElement>("#jspsych-audio-slider-response-response").disabled =
       false;
     if (!this.params.require_movement) {
       document.querySelector<HTMLButtonElement>("#jspsych-audio-slider-response-next").disabled =
         false;
     }
-  }
+  };
 
   private setupTrial = () => {
     // set up end event if trial needs it
